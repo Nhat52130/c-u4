@@ -229,12 +229,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 // class _monHocState extends State<monHoc> {
   final _id = TextEditingController();
-  final _maMonHoc = TextEditingController();
+  final _maSinhVien = TextEditingController();
 
-  final _tenMonHoc = TextEditingController();
+  final _ngaySinh = TextEditingController();
 
-  final _moTa = TextEditingController();
+  final _gioiTinh = TextEditingController();
 
+  final _queQuan = TextEditingController();
   var _output = "";
 
   @override
@@ -267,12 +268,12 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     width: 100,
-                    child: Text('Mã môn học:'),
+                    child: Text('Mã sinh viên:'),
                   ),
                   Container(
                       width: 300,
                       child: TextField(
-                        controller: _maMonHoc,
+                        controller: _maSinhVien,
                       )),
                 ],
               ),
@@ -282,12 +283,12 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     width: 100,
-                    child: Text('Tên môn học:'),
+                    child: Text('Ngày sinh:'),
                   ),
                   Container(
                       width: 300,
                       child: TextField(
-                        controller: _tenMonHoc,
+                        controller: _ngaySinh,
                       )),
                 ],
               ),
@@ -297,12 +298,27 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     width: 100,
-                    child: Text('Mô tả:'),
+                    child: Text('Giới tính:'),
                   ),
                   Container(
                       width: 300,
                       child: TextField(
-                        controller: _moTa,
+                        controller: _gioiTinh,
+                      )),
+                ],
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Container(
+                    width: 100,
+                    child: Text('Quê quán:'),
+                  ),
+                  Container(
+                      width: 300,
+                      child: TextField(
+                        controller: _queQuan,
                       )),
                 ],
               ),
@@ -311,11 +327,12 @@ class _HomePageState extends State<HomePage> {
               child: ElevatedButton(
                 onPressed: () async {
                   CollectionReference collection =
-                      FirebaseFirestore.instance.collection('MonHoc');
+                      FirebaseFirestore.instance.collection('SinhVien');
                   await collection.add({
-                    "maMonHoc": _maMonHoc.text,
-                    "TenMonHoc": _tenMonHoc.text,
-                    "moTa": _moTa.text,
+                    "maSinhVien": _maSinhVien.text,
+                    "ngaySinh": _ngaySinh.text,
+                    "gioiTinh": _gioiTinh.text,
+                    "queQuan": _queQuan.text
                   });
                 },
                 child: Text('Tạo'),
@@ -327,12 +344,13 @@ class _HomePageState extends State<HomePage> {
                   TextButton(
                     onPressed: () async {
                       CollectionReference collection =
-                          FirebaseFirestore.instance.collection('MonHoc');
+                          FirebaseFirestore.instance.collection('SinhVien');
 
                       await collection.doc(_id.text).update({
-                        "maMonHoc": _maMonHoc.text,
-                        "TenMonHoc": _tenMonHoc.text,
-                        "moTa": _moTa.text,
+                        "maSinhVien": _maSinhVien.text,
+                        "ngaySinh": _ngaySinh.text,
+                        "gioiTinh": _gioiTinh.text,
+                        "queQuan": _queQuan.text
                       });
                     },
                     child: Text('Sửa'),
@@ -341,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                   TextButton(
                     onPressed: () async {
                       CollectionReference collection =
-                          FirebaseFirestore.instance.collection('MonHoc');
+                          FirebaseFirestore.instance.collection('SinhVien');
                       collection.doc(_id.text).delete();
                     },
                     child: Text('Xóa'),
@@ -356,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                   ElevatedButton(
                     onPressed: () async {
                       CollectionReference collection =
-                          FirebaseFirestore.instance.collection('MonHoc');
+                          FirebaseFirestore.instance.collection('SinhVien');
                       QuerySnapshot querySnapshot = await collection.get();
                       List<DocumentSnapshot> documents = querySnapshot.docs;
                       setState(() {
